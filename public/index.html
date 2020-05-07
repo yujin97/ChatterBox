@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>ChatterBox</title>
+	<link rel="stylesheet" href="/stylesheets/mystyles.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="/javascripts/myscripts.js"></script>
+
+</head>
+<body ng-app="chatterBox" ng-controller="chatterBoxController" ng-init="load()">
+	<div id ="header">
+	<div class="banner"><h1>ChatterBox</h1></div>
+	<div id ="LoginBar" ng-show="ready" ng-model="icon" ng-model="myName" ng-model ="loginInfo">
+	<div ng-click="getuserinfo()" class = "toUserInfo">
+	<img ng-src="{{loginInfo.icon}}" height="42" width="42">&nbsp&nbsp{{loginInfo.name}}
+	</div>
+	<div class = "logoutButton">
+	<button type="button" id="LogoutButton" ng-click="logout()">Logout</button>
+	</div>
+	</div>
+	</div>
+
+	<div id="LoginPage" ng-show="login" > <!-- The Login Page -->
+	<br>
+	<table style="border : 0">
+	<tr><td>Username</td><td><input type="text" ng-model="UserInfo.userName"> </td></tr>
+	<tr><td>password</td> <td><input type="text" ng-model="UserInfo.password"> </td></tr>
+	<tr><td><button type="button" id="LoginButton"  ng-click="loginB (UserInfo)">Login</button></td></tr>
+	</table>
+	</div>
+
+	<div id="ChatterBox" ng-show="ready"> <!-- The page after login -->
+	<div id="friendBar"> <!-- Friend Bar -->
+		<div>Friends:</div>
+		<div ng-repeat='friend in loginInfo.friends' ng-click="chooseButton($index);getconversation(loginInfo.friends_id[$index]);loginInfo.unread_no[$index] = 0" ng-class="{clicked : $index == chosen}"> <!-- highlight the chosen friend -->
+		{{friend.name}}<div ng-if = "loginInfo.unread_no[$index] != 0" class="unread">({{loginInfo.unread_no[$index]}})</div>
+		</div>
+	</div> <!-- End Of Friend Bar -->
+	<div id="content" > <!-- all content in this div -->
+	<div id="userInfoPage" ng-show="ShowUserInfo" ng-model ="loginInfo.name" ng-model ="UserDetail"><!-- for userinfo-->
+	<img ng-src="{{loginInfo.icon}}" height="42" width="42">&nbsp&nbsp{{loginInfo.name}}<br>
+	<table>
+	<tr><td>Mobile number</td><td><input type="text" ng-model="UserDetail.mobileNumber"></td></tr>
+	<tr><td>Home number</td><td><input type="text" ng-model="UserDetail.homeNumber"></td></tr>
+	<tr><td>Mailing address</td><td><input type="text" ng-model="UserDetail.address"></td></tr>
+	<tr><td><button type="button" id="SaveButton" ng-click="saveuserinfo(UserDetail)" >Save</button></td></tr>
+	</table>
+	</div> <!-- end user info -->
+	<div id ="conversation" ng-show="ShowConversation" ng-model="ConversationInfo" ng-model="loginInfo.userId"> <!-- When friend is clicked -->
+	<div id="ConversationTop"> <!-- The top of the chatbox -->
+	<img ng-src="{{ConversationInfo.icon}}" height="42" width="42">&nbsp&nbsp{{ConversationInfo.name}}&nbsp&nbsp({{ConversationInfo.status}})
+	</div>
+	<div class = "DivWithScroll"  id="innerBox" >
+	<div ng-repeat='message in ConversationInfo.messages' > <!-- each message -->
+	<div ng-if ="id_list.includes(message._id)==false && ($index == 0 || message.date != ConversationInfo.messages[$index-1].date) && message.date == ConversationInfo.messages[$index+1].date " class = "date">
+	{{message.date}}<br>
+	</div> <!-- display time if needed even when the 1st msg of the day is deleted-->
+	<div ng-if ="id_list.includes(message._id)" > <!-- showOrNot -->
+	<div ng-if ="$index == 0 || message.date != ConversationInfo.messages[$index-1].date" class="date">
+	{{message.date}}<br>
+	</div>
+	<div ng-if="message.senderId != loginInfo.userId" class="DivToScroll" > <!-- msg sent by friend -->
+	<img ng-src="{{ConversationInfo.icon}}" height="42" width="42"><div class ="msg">{{message.message}}</div>
+	<div class = "time">{{message.time}}</div>
+	<br>
+	</div> <!-- end of msg sent by friend -->
+	<div ng-if="message.senderId == loginInfo.userId" ng-dblclick="deletemessage(message._id)"class="DivToScroll"> <!-- msg sent by me -->
+	<div class = "dummy"></div><div class="mymsg">{{message.message}}&nbsp&nbsp&nbsp{{message.time}}</div>
+	</div> <!-- end of msg sent by me -->
+	</div> <!-- end of showOrNot -->
+	</div> <!-- end of Each message -->
+	</div> <!-- end of scrollable box -->
+	<div id ='messageBox'> <!-- msgbox -->
+	<div class ="box">
+	<input type="text" width="100%" ng-model="msgBox.message" ng-click="msgBox.message = ''" ng-blur="msgBox.message =  'Type a message here'" ng-enter="postmessage(msgBox);" style="display:table-cell; width:100%">
+	</div>
+	</div> <!--  end of the messagebox for sending message -->
+	</div>
+	</div>
+	</div>
+	
+</body>
+</html>

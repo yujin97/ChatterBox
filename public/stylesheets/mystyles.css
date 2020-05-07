@@ -1,0 +1,111 @@
+body{
+background-color:lightyellow;
+	
+}
+
+
+
+.clicked{
+	background-color:red;
+}
+
+.notClicked{
+	background-color:default;
+}
+
+.banner{
+	text-align: center;
+}
+
+.toUserInfo{
+	display:inline-block;
+}
+
+.logoutButton{
+	display:inline-block;
+	float:right;
+}
+
+#friendBar{
+	border-style:solid;
+	float:left;
+	width:15%;
+	height:400px;
+	display:inline-block;
+}
+
+#content{
+border-style:hidden;
+	display:inline-block;
+	width:50%;
+	position:relative;
+}
+
+#userInfoPage{
+	border-style:solid;
+}
+
+#ConversationTop{
+	border-style:solid;
+	background-color:#FFFFFF;
+}
+
+#conversation{
+ 	background-color:#F5F5F5;
+}
+
+.DivToScroll{   
+    background-color: #F5F5F5;
+    border: 1px;
+    border-style: hidden;
+    border-radius: 4px 0 4px 0;
+    color: #3B3C3E;
+    font-size: 12px;
+    font-weight: bold;
+    left: -1px;
+    padding: 10px 7px 5px;
+}
+
+.DivWithScroll{
+    height:333px;
+    overflow:scroll;
+    overflow-x:hidden;
+}
+
+.box{
+	margin: auto;
+    width: 50%;
+    display:table;
+}
+
+.unread{
+	display:inline;
+}
+
+.mymsg{
+	display:inline-block;
+	float:right;
+	background-color:#CEF6CE;
+}
+
+.msg{
+	display:inline-block;
+}
+
+.time{
+	display:inline-block;
+	float:right;
+}
+
+.dummy{
+	height:20px;
+	width:20px;
+	display:inline-block;
+}
+
+.date{
+background-color:#A9F5F2;
+text-align: center;
+
+}
+
